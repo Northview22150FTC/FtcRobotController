@@ -23,7 +23,6 @@ public class MecanumDrive extends LinearOpMode {
     private DcMotor rightFrontDrive = null; // W2
     private DcMotor rightBackDrive = null; // W3
     private DcMotor intakeMotor = null;
-    private boolean lockArmInClimb = false;
 
     @Override
     public void runOpMode() {
