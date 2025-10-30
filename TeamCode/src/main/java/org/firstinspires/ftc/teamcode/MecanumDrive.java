@@ -22,7 +22,7 @@ public class MecanumDrive extends LinearOpMode {
     private DcMotor leftBackDrive = null; // W4
     private DcMotor rightFrontDrive = null; // W2
     private DcMotor rightBackDrive = null; // W3
-    private DcMotor armTilt2 = null;
+    private DcMotor intakeMotor = null;
     private boolean lockArmInClimb = false;
 
     @Override
@@ -34,7 +34,7 @@ public class MecanumDrive extends LinearOpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "frontRightMotor"); //port 1 / W2
         leftBackDrive  = hardwareMap.get(DcMotor.class, "backLeftMotor"); // port 2 / W4
         rightBackDrive = hardwareMap.get(DcMotor.class, "backRightMotor"); // port 3 / W3
-        armTilt2 = hardwareMap.get(DcMotor.class, "armTilt2"); //expansion 0
+        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor"); //expansion 0
         //Directions for the motors
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -87,37 +87,18 @@ public class MecanumDrive extends LinearOpMode {
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
             telemetry.update();
-        //climber code
-            // if (gamepad1.dpad_up) {
-            //   climber.setPower(1);
-            // } else if (gamepad1.dpad_down) {
-            //   climber.setPower(-1);
-            // } else {
-            //   climber.setPower(0);
-            // }
-            
-        //arm tilt code
-            if (gamepad1.left_bumper) {
-                armTilt2.setPower(1);
-            } else if (gamepad1.right_bumper){
-                armTilt2.setPower(-1);
-            } else {
-                armTilt2.setPower(0);
-            }
-            
 
-            //final climb: locking code so the drivers don't need to
-            //hold the button for the entire time
-            if (gamepad1.right_stick_button) {
-                 lockArmInClimb = true;
+            
+        //intake code
+            if (gamepad1.left_bumper) {
+                intakeMotor.setPower(1);
+            } else if (gamepad1.right_bumper){
+                intakeMotor.setPower(-1);
+            } else {
+                intakeMotor.setPower(0);
             }
-            if (lockArmInClimb) {
-             armTilt2.setPower(-1);
-            }
+
         }
-        //we put it outside just for redundancies, even though this never gets called
-        if (lockArmInClimb) {
-            armTilt2.setPower(-1);
-        }
+
     }
 }
